@@ -11,7 +11,7 @@ class Olympus < Formula
   on_macos do
     if Hardware::CPU.intel?
       url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.4.0/olympus_0.4.0_darwin_amd64.tar.gz"
-      sha256 "0e86563f10082bc45184017c70a264c519fa9cfff35b99d0e4c97f599f0d3040"
+      sha256 "1a6f69c633cb4d2fc1bd1043409373535edbf400b11d4a0c99ea2bffa3493841"
 
       define_method(:install) do
         bin.install "olympus"
@@ -20,7 +20,7 @@ class Olympus < Formula
     end
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.4.0/olympus_0.4.0_darwin_arm64.tar.gz"
-      sha256 "302277c611529968829494b9d15752d9fe230e983e4144254deeb8cc5d83eb6a"
+      sha256 "33cf91216823d8d70da7567d772b8de4e46c4345611fbb92307d022755f5b259"
 
       define_method(:install) do
         bin.install "olympus"
@@ -32,7 +32,7 @@ class Olympus < Formula
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
       url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.4.0/olympus_0.4.0_linux_amd64.tar.gz"
-      sha256 "47a751de2b8e3b9f1e7ba63d4eb06ce0f59d60d4fcf0d470c5b114b59e111d3a"
+      sha256 "d9c52ef729149bea05c32307a7b4aa83ed2e282b20e0bc52c94ba7bf21049911"
       define_method(:install) do
         bin.install "olympus"
         bin.install_symlink bin/"olympus" => "oly"
@@ -40,7 +40,7 @@ class Olympus < Formula
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.4.0/olympus_0.4.0_linux_arm64.tar.gz"
-      sha256 "c04c54b3d66854298032f272e0d47aa86ed7410de2744dcb21492816619742b0"
+      sha256 "9b4caffe8889b2e35f869d16e954eee81fee1e5ecd87b7ebf33b406e8917f828"
       define_method(:install) do
         bin.install "olympus"
         bin.install_symlink bin/"olympus" => "oly"
