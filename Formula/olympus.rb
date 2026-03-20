@@ -5,13 +5,13 @@
 class Olympus < Formula
   desc "AI orchestration layer for developers — multi-model, local-first, governance built-in"
   homepage "https://olympus.sh"
-  version "0.5.1"
+  version "0.5.2"
   license "GPL-3.0-only"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.1/olympus_0.5.1_darwin_amd64.tar.gz"
-      sha256 "3d29baa20b9701d6866b3ff8da355afadda614fd24877cc6f57873c50e2d295a"
+      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.2/olympus_0.5.2_darwin_amd64.tar.gz"
+      sha256 "4d405937414068d163b2ab055b4100d8e9620bf1d1ebc089c2d4503ee68e80d3"
 
       define_method(:install) do
         bin.install "olympus"
@@ -19,8 +19,8 @@ class Olympus < Formula
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.1/olympus_0.5.1_darwin_arm64.tar.gz"
-      sha256 "d4fe8dc6ee4ae23862932a6ee9a5cd0642b4064be6978952b24c55effeadd023"
+      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.2/olympus_0.5.2_darwin_arm64.tar.gz"
+      sha256 "75a8328706a1a0a0b17d5580e723d16f60b1f07e1cf6cd0e1c3593daced17f89"
 
       define_method(:install) do
         bin.install "olympus"
@@ -31,16 +31,16 @@ class Olympus < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.1/olympus_0.5.1_linux_amd64.tar.gz"
-      sha256 "98e69ef02554e21e1b64430de6ccbea50c2c7848f9de2cf735b858dceda52f67"
+      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.2/olympus_0.5.2_linux_amd64.tar.gz"
+      sha256 "53dfd91321bd02a463c3fea3c1028043654949d08e40d2e01b6183688a7f6f26"
       define_method(:install) do
         bin.install "olympus"
         bin.install_symlink bin/"olympus" => "oly"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.1/olympus_0.5.1_linux_arm64.tar.gz"
-      sha256 "df8c9aa51773722210e48c20f8eed29020c2b95cf54c61da8ce8808652cee278"
+      url "https://github.com/convergent-systems-co/olympus-cli/releases/download/v0.5.2/olympus_0.5.2_linux_arm64.tar.gz"
+      sha256 "0d5fb5ad4879241a5b19de824195dc253f1bf00be7692520886b4a8ce773386b"
       define_method(:install) do
         bin.install "olympus"
         bin.install_symlink bin/"olympus" => "oly"
