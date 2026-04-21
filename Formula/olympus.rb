@@ -5,17 +5,17 @@
 class Olympus < Formula
   desc "AI orchestration layer for developers — multi-model, local-first, governance built-in"
   homepage "https://olympus.sh"
-  version "2.2.10"
+  version "2.3.0"
   license "BSL-1.1"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://builds.olympus.sh/v2.2.10/olympus_2.2.10_darwin_arm64.tar.gz"
-      sha256 "e5e2106ebe6c9d6427547f10224113c4a77b62513366340ab5653a20767039a3"
+      url "https://builds.olympus.sh/v2.3.0/olympus_2.3.0_darwin_arm64.tar.gz"
+      sha256 "a1d2ddc95f4d74a628b17ebf4e34d00c10f24f0ba2a1a3a51d0ede44b6dcb181"
     end
     if Hardware::CPU.intel?
-      url "https://builds.olympus.sh/v2.2.10/olympus_2.2.10_darwin_amd64.tar.gz"
-      sha256 "ec7ebee95207eb9adc17538ece19c5b8cfc1fb4a692591d6241cccb6d197ad2e"
+      url "https://builds.olympus.sh/v2.3.0/olympus_2.3.0_darwin_amd64.tar.gz"
+      sha256 "efe1320c6b8c6e62483104cf76245ec46eed0a186c09ed820857bde7cc95e8f6"
     end
 
     define_method(:install) do
@@ -26,12 +26,12 @@ class Olympus < Formula
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://builds.olympus.sh/v2.2.10/olympus_2.2.10_linux_arm64.tar.gz"
-      sha256 "774a43e4d6949801c299e2879f77ac5fd13eb44cb8f59b882c5b4237d03a6a10"
+      url "https://builds.olympus.sh/v2.3.0/olympus_2.3.0_linux_arm64.tar.gz"
+      sha256 "577b5728e664870b3b298636a5e709b4e88707dbed82228f114e7fb8b4b38471"
     end
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://builds.olympus.sh/v2.2.10/olympus_2.2.10_linux_amd64.tar.gz"
-      sha256 "b9b448e2fbbcddc5f038deff881cbe9d46e426f259e6eadd19ee5d1a4ba07406"
+      url "https://builds.olympus.sh/v2.3.0/olympus_2.3.0_linux_amd64.tar.gz"
+      sha256 "62ad995be01a1c6e51f2d2929f96d4032fb22815cdbd0a587f2745d95166eccb"
     end
 
     define_method(:install) do
