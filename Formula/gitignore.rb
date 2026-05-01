@@ -1,18 +1,18 @@
 class Gitignore < Formula
   desc "CLI tool for managing .gitignore files from templates"
   homepage "https://github.com/convergent-systems-co/gitignore"
-  version "1.6.1"
+  version "1.7.0"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/convergent-systems-co/gitignore/releases/download/v#{version}/gitignore-v#{version}-darwin-arm64.tar.gz"
-      sha256 "a059f5136af0cd501b6a73eff53d62d5868bd48b220f9a890829f1dd3368774b"
+      sha256 "3eaa6949617f3b9a28696e1c7b0efec54f3af88868774c2b33ba0680ee38248b"
     end
 
     on_intel do
       url "https://github.com/convergent-systems-co/gitignore/releases/download/v#{version}/gitignore-v#{version}-darwin-amd64.tar.gz"
-      sha256 "36b8ecca88a682b9bc8faab588ae81be5589e7ac07eca15aaf9db54a43bbfac8"
+      sha256 "95f5aa3db026d054a73d9be1361050ebaf75a9ade57c3d71ae75a507cc2c44ab"
     end
   end
 
