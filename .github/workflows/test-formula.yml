@@ -27,9 +27,6 @@ jobs:
       - name: Install Homebrew Bundler RubyGems
         run: brew install-bundler-gems
 
-      - name: Tap this repo
-        run: brew tap convergent-systems-co/tap "$(pwd)"
-
       - name: Run brew test-bot --only-cleanup-before
         run: brew test-bot --only-cleanup-before
 
