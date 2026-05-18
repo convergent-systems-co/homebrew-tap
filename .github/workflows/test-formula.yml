@@ -4,9 +4,12 @@ on:
   push:
     paths:
       - "Formula/**.rb"
+      - ".github/workflows/test-formula.yml"
   pull_request:
     paths:
       - "Formula/**.rb"
+      - ".github/workflows/test-formula.yml"
+  workflow_dispatch:
 
 jobs:
   test:
@@ -15,7 +18,7 @@ jobs:
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@main
 
       - name: Cache Homebrew Bundler RubyGems
         uses: actions/cache@v4
@@ -26,9 +29,6 @@ jobs:
 
       - name: Install Homebrew Bundler RubyGems
         run: brew install-bundler-gems
-
-      - name: Tap this repo
-        run: brew tap convergent-systems-co/tap "$(pwd)"
 
       - name: Run brew test-bot --only-cleanup-before
         run: brew test-bot --only-cleanup-before
