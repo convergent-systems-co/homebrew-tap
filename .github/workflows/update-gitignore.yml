@@ -91,14 +91,14 @@ jobs:
           content = re.sub(r'version "[0-9.]+"', f'version "{bare}"', content)
 
           content = re.sub(
-              r'(on_arm\s+do.*?sha256\s+")[0-9a-f]+"',
+              r'(sha256 arm:\s+")[0-9a-f]+"',
               rf'\g<1>{sha_arm}"',
-              content, flags=re.DOTALL,
+              content,
           )
           content = re.sub(
-              r'(on_intel\s+do.*?sha256\s+")[0-9a-f]+"',
+              r'(intel:\s+")[0-9a-f]+"',
               rf'\g<1>{sha_amd}"',
-              content, flags=re.DOTALL,
+              content,
           )
 
           open(path, "w").write(content)
