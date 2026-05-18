@@ -6,7 +6,7 @@ class Olympus < Formula
   desc "AI orchestration layer for developers — multi-model, local-first, governance built-in"
   homepage "https://olympus.sh"
   version "2.3.0"
-  license "BSL-1.1"
+  license "BUSL-1.1"
 
   on_macos do
     if Hardware::CPU.arm?
@@ -16,11 +16,6 @@ class Olympus < Formula
     if Hardware::CPU.intel?
       url "https://builds.olympus.sh/v2.3.0/olympus_2.3.0_darwin_amd64.tar.gz"
       sha256 "efe1320c6b8c6e62483104cf76245ec46eed0a186c09ed820857bde7cc95e8f6"
-    end
-
-    define_method(:install) do
-      bin.install "olympus"
-      bin.install_symlink bin/"olympus" => "oly"
     end
   end
 
@@ -33,11 +28,11 @@ class Olympus < Formula
       url "https://builds.olympus.sh/v2.3.0/olympus_2.3.0_linux_amd64.tar.gz"
       sha256 "62ad995be01a1c6e51f2d2929f96d4032fb22815cdbd0a587f2745d95166eccb"
     end
+  end
 
-    define_method(:install) do
-      bin.install "olympus"
-      bin.install_symlink bin/"olympus" => "oly"
-    end
+  def install
+    bin.install "olympus"
+    bin.install_symlink bin/"olympus" => "oly"
   end
 
   test do
