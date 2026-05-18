@@ -6,7 +6,7 @@ class Olympus < Formula
   desc "AI orchestration layer for developers — multi-model, local-first, governance built-in"
   homepage "https://olympus.sh"
   version "2.3.0"
-  license "BSL-1.1"
+  license "BUSL-1.1"
 
   on_macos do
     if Hardware::CPU.arm?
