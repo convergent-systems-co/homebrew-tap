@@ -41,8 +41,10 @@ jobs:
           TAG="${VERSION}"
           [[ "${TAG}" != v* ]] && TAG="v${TAG}"
           BARE="${TAG#v}"
-          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
-          echo "bare=${BARE}" >> "$GITHUB_OUTPUT"
+          {
+            echo "tag=${TAG}"
+            echo "bare=${BARE}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Check if update is needed
         id: check
@@ -69,9 +71,11 @@ jobs:
           curl -fsSL "${BASE}/gitignore-${TAG}-darwin-arm64.tar.gz" -o darwin-arm64.tar.gz
           curl -fsSL "${BASE}/gitignore-${TAG}-linux-amd64.tar.gz"  -o linux-amd64.tar.gz
 
-          echo "darwin_amd64=$(sha256sum darwin-amd64.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
-          echo "darwin_arm64=$(sha256sum darwin-arm64.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
-          echo "linux_amd64=$(sha256sum linux-amd64.tar.gz  | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          {
+            echo "darwin_amd64=$(sha256sum darwin-amd64.tar.gz | awk '{print $1}')"
+            echo "darwin_arm64=$(sha256sum darwin-arm64.tar.gz | awk '{print $1}')"
+            echo "linux_amd64=$(sha256sum linux-amd64.tar.gz  | awk '{print $1}')"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Update formula file
         if: steps.check.outputs.needed == 'true'
