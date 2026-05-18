@@ -4,6 +4,8 @@ class Gitignore < Formula
   version "1.8.1"
   license "MIT"
 
+  depends_on :macos
+
   on_macos do
     on_arm do
       url "https://github.com/convergent-systems-co/gitignore/releases/download/v#{version}/gitignore-v#{version}-darwin-arm64.tar.gz"
