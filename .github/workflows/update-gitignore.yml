@@ -1,4 +1,4 @@
-name: Update gitignore Cask
+name: Update gitignore Formula
 
 on:
   repository_dispatch:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   update:
-    name: Update gitignore cask
+    name: Update gitignore formula
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -47,7 +47,7 @@ jobs:
       - name: Check if update is needed
         id: check
         run: |
-          CURRENT=$(grep -oP '(?<=version ")[\d.]+' Casks/gitignore.rb | head -1)
+          CURRENT=$(grep -oP '(?<=version ")[\d.]+' Formula/gitignore.rb | head -1)
           TARGET="${{ steps.version.outputs.bare }}"
           echo "current=${CURRENT}" >> "$GITHUB_OUTPUT"
           if [ "${CURRENT}" = "${TARGET}" ]; then
@@ -58,47 +58,59 @@ jobs:
             echo "Updating ${CURRENT} -> ${TARGET}"
           fi
 
-      - name: Download macOS binaries and compute checksums
+      - name: Download release artifacts and compute checksums
         if: steps.check.outputs.needed == 'true'
         id: shas
         run: |
           TAG="${{ steps.version.outputs.tag }}"
           BASE="https://github.com/convergent-systems-co/gitignore/releases/download/${TAG}"
 
-          curl -fsSL "${BASE}/gitignore-${TAG}-darwin-amd64.tar.gz" -o amd64.tar.gz
-          curl -fsSL "${BASE}/gitignore-${TAG}-darwin-arm64.tar.gz" -o arm64.tar.gz
+          curl -fsSL "${BASE}/gitignore-${TAG}-darwin-amd64.tar.gz" -o darwin-amd64.tar.gz
+          curl -fsSL "${BASE}/gitignore-${TAG}-darwin-arm64.tar.gz" -o darwin-arm64.tar.gz
+          curl -fsSL "${BASE}/gitignore-${TAG}-linux-amd64.tar.gz"  -o linux-amd64.tar.gz
 
-          echo "amd64=$(sha256sum amd64.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
-          echo "arm64=$(sha256sum arm64.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "darwin_amd64=$(sha256sum darwin-amd64.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "darwin_arm64=$(sha256sum darwin-arm64.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "linux_amd64=$(sha256sum linux-amd64.tar.gz  | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Update formula file
         if: steps.check.outputs.needed == 'true'
         env:
           BARE: ${{ steps.version.outputs.bare }}
-          SHA_AMD64: ${{ steps.shas.outputs.amd64 }}
-          SHA_ARM64: ${{ steps.shas.outputs.arm64 }}
+          SHA_DARWIN_AMD64: ${{ steps.shas.outputs.darwin_amd64 }}
+          SHA_DARWIN_ARM64: ${{ steps.shas.outputs.darwin_arm64 }}
+          SHA_LINUX_AMD64:  ${{ steps.shas.outputs.linux_amd64 }}
         run: |
           python3 - <<'EOF'
           import re, os
 
-          path = "Casks/gitignore.rb"
+          path = "Formula/gitignore.rb"
           content = open(path).read()
 
-          bare     = os.environ["BARE"]
-          sha_amd  = os.environ["SHA_AMD64"]
-          sha_arm  = os.environ["SHA_ARM64"]
+          bare         = os.environ["BARE"]
+          sha_dar_amd  = os.environ["SHA_DARWIN_AMD64"]
+          sha_dar_arm  = os.environ["SHA_DARWIN_ARM64"]
+          sha_lnx_amd  = os.environ["SHA_LINUX_AMD64"]
 
           content = re.sub(r'version "[0-9.]+"', f'version "{bare}"', content)
 
+          # macOS arm64 sha (inside on_macos > on_arm)
           content = re.sub(
-              r'(sha256 arm:\s+")[0-9a-f]+"',
-              rf'\g<1>{sha_arm}"',
-              content,
+              r'(on_macos\s+do.*?on_arm\s+do.*?sha256\s+")[0-9a-f]+"',
+              rf'\g<1>{sha_dar_arm}"',
+              content, flags=re.DOTALL,
           )
+          # macOS amd64 sha (inside on_macos > on_intel)
           content = re.sub(
-              r'(intel:\s+")[0-9a-f]+"',
-              rf'\g<1>{sha_amd}"',
-              content,
+              r'(on_macos\s+do.*?on_intel\s+do.*?sha256\s+")[0-9a-f]+"',
+              rf'\g<1>{sha_dar_amd}"',
+              content, flags=re.DOTALL,
+          )
+          # Linux amd64 sha (inside on_linux > on_intel)
+          content = re.sub(
+              r'(on_linux\s+do.*?on_intel\s+do.*?sha256\s+")[0-9a-f]+"',
+              rf'\g<1>{sha_lnx_amd}"',
+              content, flags=re.DOTALL,
           )
 
           open(path, "w").write(content)
@@ -110,6 +122,6 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Casks/gitignore.rb
-          git commit -m "chore: update gitignore cask to ${{ steps.version.outputs.tag }}"
+          git add Formula/gitignore.rb
+          git commit -m "chore: update gitignore to ${{ steps.version.outputs.tag }}"
           git push
