@@ -8,17 +8,9 @@ class Ai < Formula
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-darwin-arm64"
       sha256 "a807246f6b63cdce630b6118e9943ca8a800c38be7ac30c301b8fa3e610d8df3"
-
-      def install
-        bin.install "ai-darwin-arm64" => "ai"
-      end
     else
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-darwin-amd64"
       sha256 "0913493feb531bd1c08fcd1ae84f8196e41a08f92142419fd271db3f88830938"
-
-      def install
-        bin.install "ai-darwin-amd64" => "ai"
-      end
     end
   end
 
@@ -26,18 +18,14 @@ class Ai < Formula
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-linux-arm64"
       sha256 "6f4a2716f32a744a36e9fff2d8164082ea9bc4fce7506648cdfeb66598b284fa"
-
-      def install
-        bin.install "ai-linux-arm64" => "ai"
-      end
     else
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-linux-amd64"
       sha256 "83dabd0044de544a390c90e8f0a88c296663e5e9312db49a191f4756196d0bb3"
-
-      def install
-        bin.install "ai-linux-amd64" => "ai"
-      end
     end
+  end
+
+  def install
+    bin.install Dir["ai-*"].first => "ai"
   end
 
   def caveats
