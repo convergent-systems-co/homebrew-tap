@@ -34,8 +34,11 @@ jobs:
       - name: Run brew test-bot --only-setup
         run: brew test-bot --only-setup
 
-      - name: Run brew test-bot --only-tap-syntax
-        run: brew test-bot --only-tap-syntax
+      - name: Run brew style
+        run: brew style convergent-systems-co/tap
+
+      - name: Run brew audit (Formulae only, cross-platform)
+        run: brew audit --formula --strict --tap=convergent-systems-co/tap
 
       - name: Run brew test-bot --only-formulae
         if: github.event_name == 'pull_request'
