@@ -13,6 +13,11 @@ jobs:
   test:
     name: brew test-bot
     runs-on: macos-latest
+    env:
+      # actions/cache@v4 ships on Node 20, which the runner forces to
+      # Node 24 starting 2026-06-02. Opt in early so any breakage surfaces
+      # in CI now rather than during the forced migration.
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
