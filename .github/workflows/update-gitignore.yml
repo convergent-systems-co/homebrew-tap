@@ -1,4 +1,4 @@
-name: Update gitignore Formula
+name: Update gitignore Cask
 
 on:
   repository_dispatch:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   update:
-    name: Update gitignore formula
+    name: Update gitignore cask
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -47,7 +47,7 @@ jobs:
       - name: Check if update is needed
         id: check
         run: |
-          CURRENT=$(grep -oP '(?<=version ")[\d.]+' Formula/gitignore.rb | head -1)
+          CURRENT=$(grep -oP '(?<=version ")[\d.]+' Casks/gitignore.rb | head -1)
           TARGET="${{ steps.version.outputs.bare }}"
           echo "current=${CURRENT}" >> "$GITHUB_OUTPUT"
           if [ "${CURRENT}" = "${TARGET}" ]; then
@@ -82,7 +82,7 @@ jobs:
           python3 - <<'EOF'
           import re, os
 
-          path = "Formula/gitignore.rb"
+          path = "Casks/gitignore.rb"
           content = open(path).read()
 
           bare     = os.environ["BARE"]
@@ -111,6 +111,6 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/gitignore.rb
-          git commit -m "chore: update gitignore to ${{ steps.version.outputs.tag }}"
+          git add Casks/gitignore.rb
+          git commit -m "chore: update gitignore cask to ${{ steps.version.outputs.tag }}"
           git push
