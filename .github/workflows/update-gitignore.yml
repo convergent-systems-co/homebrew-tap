@@ -63,7 +63,6 @@ jobs:
         id: shas
         run: |
           TAG="${{ steps.version.outputs.tag }}"
-          BARE="${{ steps.version.outputs.bare }}"
           BASE="https://github.com/convergent-systems-co/gitignore/releases/download/${TAG}"
 
           curl -fsSL "${BASE}/gitignore-${TAG}-darwin-amd64.tar.gz" -o amd64.tar.gz
