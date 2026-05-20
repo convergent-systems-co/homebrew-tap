@@ -1,20 +1,20 @@
 class Ai < Formula
   desc "Polliard governance stack bootstrap binary"
   homepage "https://convergent-systems-co.github.io/ai/"
-  version "0.4.0"
+  version "0.4.1"
   license :cannot_represent
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-darwin-arm64"
-      sha256 "aac115ecf851deaad3beb8f14488ef47a52001861d118c2eb9cdf873a19a9398"
+      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-darwin-arm64"
+      sha256 "fcfbe0c25a21dbc10cc1feccc00b2c44264b96ae1e070c372e3f51dabbbcc607"
 
       def install
         bin.install "ai-darwin-arm64" => "ai"
       end
     else
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-darwin-amd64"
-      sha256 "b516b49bebd82c98848848460b7878478d33bd6d4d1ccc8c98cd9bf905b2e3de"
+      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-darwin-amd64"
+      sha256 "497be3540b449f9a83477bc94ca7566f2bd7b80849ebdf73ca8d63f580209b86"
 
       def install
         bin.install "ai-darwin-amd64" => "ai"
@@ -24,15 +24,15 @@ class Ai < Formula
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-linux-arm64"
-      sha256 "5882c20bf78d0af050b453a2d7be4db3d469f1efa5ba36bf0efaebf5ee54f73e"
+      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-linux-arm64"
+      sha256 "8d971f1f2d9ca4436395d6bf24c9d3dbd18d163173b4c50cc38ae7562d870aa5"
 
       def install
         bin.install "ai-linux-arm64" => "ai"
       end
     else
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-linux-amd64"
-      sha256 "bdf4b1e15860b08c05b0adb0771b4bf47b8726d89cfe19c102528a6ec1ae1d56"
+      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-linux-amd64"
+      sha256 "3a877ad1f6a7a19b639e145a571deed4e2b49669b19e414cd2c08df0bfefa9fe"
 
       def install
         bin.install "ai-linux-amd64" => "ai"
