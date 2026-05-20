@@ -7,14 +7,14 @@ class Ai < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-darwin-arm64"
-      sha256 "9ab7f19b74427831c27fd5dbe2acdb86c0849a917a10b8c6e1855add020a0681"
+      sha256 "aac115ecf851deaad3beb8f14488ef47a52001861d118c2eb9cdf873a19a9398"
 
       def install
         bin.install "ai-darwin-arm64" => "ai"
       end
     else
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-darwin-amd64"
-      sha256 "289157af4f5ec706239cb19ba8865ddd1f3051b533077bb4ccbfe916eae110eb"
+      sha256 "b516b49bebd82c98848848460b7878478d33bd6d4d1ccc8c98cd9bf905b2e3de"
 
       def install
         bin.install "ai-darwin-amd64" => "ai"
@@ -25,14 +25,14 @@ class Ai < Formula
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-linux-arm64"
-      sha256 "29bc4755e3be2c9e26d87b0ef8f74ba1fcf10f8675c0ac75085f7741bc5edbda"
+      sha256 "5882c20bf78d0af050b453a2d7be4db3d469f1efa5ba36bf0efaebf5ee54f73e"
 
       def install
         bin.install "ai-linux-arm64" => "ai"
       end
     else
       url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.0/ai-linux-amd64"
-      sha256 "922beb89fae52ced42505f72378cd1c4be183bf5aea5989eb5c0f835ba7aebb1"
+      sha256 "bdf4b1e15860b08c05b0adb0771b4bf47b8726d89cfe19c102528a6ec1ae1d56"
 
       def install
         bin.install "ai-linux-amd64" => "ai"
