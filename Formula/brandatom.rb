@@ -13,20 +13,20 @@ class Brandatom < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/branding-library/releases/download/brandatom-v#{version}/brandatom-darwin-arm64.tar.gz"
-      sha256 "bb4b97fb0e691038f0c98bb2dde4b9ebfdca7c7bd787390d7350ce3a42ff29db"
+      sha256 "2dd838dcb02867e7312afa94f5b8cc7f77f713f624f46b7278de6f960f201b6f"
     else
       url "https://github.com/convergent-systems-co/branding-library/releases/download/brandatom-v#{version}/brandatom-darwin-amd64.tar.gz"
-      sha256 "9ad238b7fd76653180056a8e025eb2b652c35718a4444c920ab3c98159b3f193"
+      sha256 "2c04e47938db77bc349aa7c96bb3404e02f5a787dff21d8e77d4b5ea25ec88bd"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/branding-library/releases/download/brandatom-v#{version}/brandatom-linux-arm64.tar.gz"
-      sha256 "32d90e143f8da1a6f3f88fe4906437c2378e3c415aaab2d4b99549f224e95c42"
+      sha256 "2b60ea85c5f6859a27071cb158023278dc117e91ed1b3459019fb6f13f1e59cf"
     else
       url "https://github.com/convergent-systems-co/branding-library/releases/download/brandatom-v#{version}/brandatom-linux-amd64.tar.gz"
-      sha256 "84246aef3a15af092ac45335b2c5db0d42ca8b2bee3c477910c5d032fa2e155d"
+      sha256 "9e044900006fc9ab0957734c85fd3a93f010247f9f968faa38eeb3d9122234b1"
     end
   end
 
