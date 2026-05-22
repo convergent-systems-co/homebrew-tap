@@ -1,43 +1,31 @@
 class Ai < Formula
   desc "Polliard governance stack bootstrap binary"
   homepage "https://convergent-systems-co.github.io/ai/"
-  version "0.4.1"
+  version "0.6.0"
   license :cannot_represent
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-darwin-arm64"
-      sha256 "fcfbe0c25a21dbc10cc1feccc00b2c44264b96ae1e070c372e3f51dabbbcc607"
-
-      def install
-        bin.install "ai-darwin-arm64" => "ai"
-      end
+      url "https://pub-c1020ffe9811429797840212d4437655.r2.dev/v0.6.0/ai-darwin-arm64"
+      sha256 "09b21b6846d33961714eb94d9fda0587264ee2c9fc8d7dfd1d659334272455ef"
     else
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-darwin-amd64"
-      sha256 "497be3540b449f9a83477bc94ca7566f2bd7b80849ebdf73ca8d63f580209b86"
-
-      def install
-        bin.install "ai-darwin-amd64" => "ai"
-      end
+      url "https://pub-c1020ffe9811429797840212d4437655.r2.dev/v0.6.0/ai-darwin-amd64"
+      sha256 "d85882bf9db995e8ac6237508a1987d063a5a58dcbbdc9611d43e3158addc5bd"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-linux-arm64"
-      sha256 "8d971f1f2d9ca4436395d6bf24c9d3dbd18d163173b4c50cc38ae7562d870aa5"
-
-      def install
-        bin.install "ai-linux-arm64" => "ai"
-      end
+      url "https://pub-c1020ffe9811429797840212d4437655.r2.dev/v0.6.0/ai-linux-arm64"
+      sha256 "e8e4466da8cda2ac9c9bc437ce5f3d9adf96b1b6e7fd5aed5178d8e601e1ff9e"
     else
-      url "https://github.com/convergent-systems-co/ai/releases/download/v0.4.1/ai-linux-amd64"
-      sha256 "3a877ad1f6a7a19b639e145a571deed4e2b49669b19e414cd2c08df0bfefa9fe"
-
-      def install
-        bin.install "ai-linux-amd64" => "ai"
-      end
+      url "https://pub-c1020ffe9811429797840212d4437655.r2.dev/v0.6.0/ai-linux-amd64"
+      sha256 "436f75c2eba856788212c6990acfce2dd1ec16603c8c5cb8ba3e88b539dd1dea"
     end
+  end
+
+  def install
+    bin.install Dir["ai-*"].first => "ai"
   end
 
   def caveats
