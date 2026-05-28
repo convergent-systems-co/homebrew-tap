@@ -5,21 +5,21 @@
 class Ai < Formula
   desc "AI Constitution CLI — govern your AI assistant with a personal constitution"
   homepage "https://github.com/convergent-systems-co/aiConstitution"
-  version "1.3.0"
+  version "1.3.1"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.0/aiConstitution_1.3.0_darwin_amd64.tar.gz"
-      sha256 "bc0ab8fdf8ee6f0613b6b7047097e760bfbd86cf2c4223ec1e9b1b14d14894ec"
+      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.1/aiConstitution_1.3.1_darwin_amd64.tar.gz"
+      sha256 "cf05cf0f61383698eea1c2da1714b945357cc56d3997db3bbb35cd0d6120aa56"
 
       define_method(:install) do
         bin.install "ai"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.0/aiConstitution_1.3.0_darwin_arm64.tar.gz"
-      sha256 "d031a8c52740c36a0dfcaf11f78dcfeb01f05dbc9be3b92b950aefd3f46cbfb5"
+      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.1/aiConstitution_1.3.1_darwin_arm64.tar.gz"
+      sha256 "2d07de11e6794e78678874fc79bc9cea8dbbd383f4a76708881db43ef4669d33"
 
       define_method(:install) do
         bin.install "ai"
@@ -29,15 +29,15 @@ class Ai < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.0/aiConstitution_1.3.0_linux_amd64.tar.gz"
-      sha256 "e8ffc248391738bc2cf18f06d08b9faa0d3de1dcf17f142c52a131930de1c3c7"
+      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.1/aiConstitution_1.3.1_linux_amd64.tar.gz"
+      sha256 "29d38fe008f3f78447c1f4c63d4c7869d614bd72faef3926b977ec62de4002ff"
       define_method(:install) do
         bin.install "ai"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.0/aiConstitution_1.3.0_linux_arm64.tar.gz"
-      sha256 "f8fbb8457748eb4d30814dae8b523f5622adca61f4ece5fb763be36180709f65"
+      url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.3.1/aiConstitution_1.3.1_linux_arm64.tar.gz"
+      sha256 "37e0683e00c99a29aff06388efc9500d17fcc981d73cde9f1c4c5de84af8c8ea"
       define_method(:install) do
         bin.install "ai"
       end
