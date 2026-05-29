@@ -11,7 +11,7 @@ class Ai < Formula
   on_macos do
     if Hardware::CPU.intel?
       url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.4.3/aiConstitution_1.4.3_darwin_amd64.tar.gz"
-      sha256 "7ce8ea3f2fe18944e22473031a9105151847bfc80f901a47ca52619941da52af"
+      sha256 "cb63709c66189ad7a1cae6b25feb4866edca519bfcc1a9921a38a40a469f657c"
 
       define_method(:install) do
         bin.install "ai"
@@ -19,7 +19,7 @@ class Ai < Formula
     end
     if Hardware::CPU.arm?
       url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.4.3/aiConstitution_1.4.3_darwin_arm64.tar.gz"
-      sha256 "b8faaa043fedee01ae81235adab4556e4b7f139b75dc07cfa7aaea35fb665243"
+      sha256 "09019880ba5cd26466bfae71a24bbe74d0519ad92791997613a5bfe37c3b5c37"
 
       define_method(:install) do
         bin.install "ai"
@@ -30,14 +30,14 @@ class Ai < Formula
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
       url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.4.3/aiConstitution_1.4.3_linux_amd64.tar.gz"
-      sha256 "d7e95d8ffac3d3a2028b6926b7d56bb9888ce379ef2bdfa5e412189b4e7abeb5"
+      sha256 "e9bb695b79235fbc6952d93cf47b7edc75d0287e1237f034cb9c58f2a73b718c"
       define_method(:install) do
         bin.install "ai"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/convergent-systems-co/aiConstitution/releases/download/v1.4.3/aiConstitution_1.4.3_linux_arm64.tar.gz"
-      sha256 "12b7221d863d76163b0c5b1301102a9105906d0d98f8e486754fd63b15ec9c65"
+      sha256 "b94c41fddbfc91aa8b730e6aa32d86a9f000c18f750b673001297f16037ec678"
       define_method(:install) do
         bin.install "ai"
       end
