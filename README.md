@@ -20,6 +20,13 @@ brew install convergent-systems-co/tap/gitignore
 
 **Source:** https://github.com/convergent-systems-co/gitignore
 
+## Olympus availability
+
+The legacy Olympus v2.3.0 formula has been removed because it is not production-ready.
+The replacement release target is **v1.0.0**. It is not available through this tap yet.
+Restore the Olympus formula only after the replacement runtime and release artifacts
+have been verified. Existing legacy installations are not automatically removed.
+
 ## Automation
 
 Formula versions are updated automatically via GitHub Actions whenever a new release is published in the upstream project. The workflow:
