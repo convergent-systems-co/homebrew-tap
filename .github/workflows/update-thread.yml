@@ -1,0 +1,53 @@
+name: Update Thread Formula
+
+on:
+  repository_dispatch:
+    types: [thread-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Thread release version, without v"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve version
+        id: version
+        run: |
+          VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
+          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
+      - name: Download artifacts and update checksums
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          base="https://github.com/convergent-systems-co/thread/releases/download/v${VERSION}"
+          curl -fsSL "${base}/thread_${VERSION}_darwin_amd64.tar.gz" -o darwin-amd64.tar.gz
+          curl -fsSL "${base}/thread_${VERSION}_darwin_arm64.tar.gz" -o darwin-arm64.tar.gz
+          curl -fsSL "${base}/thread_${VERSION}_linux_amd64.tar.gz" -o linux-amd64.tar.gz
+          curl -fsSL "${base}/thread_${VERSION}_linux_arm64.tar.gz" -o linux-arm64.tar.gz
+          python3 - <<'PY'
+          import hashlib, os, pathlib, re
+          v=os.environ["VERSION"]
+          p=pathlib.Path("Formula/thread.rb")
+          s=p.read_text()
+          hashes={name:hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() for name in ["darwin-amd64.tar.gz","darwin-arm64.tar.gz","linux-amd64.tar.gz","linux-arm64.tar.gz"]}
+          s=re.sub(r'version "[^"]+"', f'version "{v}"', s, count=1)
+          for key, value in hashes.items():
+              s=s.replace({"darwin-amd64.tar.gz":"2e6ba354c0c8f88610939b4954c6847a5a836438dd63e24af00271af52b7c1a9","darwin-arm64.tar.gz":"2ca4f5589e992c69113f1f686666c1fa84f25f53aac818adc38ddba8e51ecba2","linux-amd64.tar.gz":"941444255524d57d14408d414216ca34c31e306b95125c127903cc54cb5c5d68","linux-arm64.tar.gz":"2913088679f63c6c9e949029a9bc9b40f26ba80091ac27566a70a34d64f3c3b6"}[key],value)
+          p.write_text(s)
+          PY
+      - name: Commit
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git add Formula/thread.rb
+          git commit -m "chore: update thread to v${VERSION}" || exit 0
+          git push
