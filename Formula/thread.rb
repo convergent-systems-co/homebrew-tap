@@ -9,23 +9,23 @@ class Thread < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.4/thread_0.1.4_darwin_arm64.tar.gz"
-      sha256 "26627b4c3e9e607d6c70b5c6ee0deb29c47b2ba432893a155dd094af18e92298"
+      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.6/thread_0.1.6_darwin_arm64.tar.gz"
+      sha256 "cf12533d14f9f187e6d41850332bf1808bebcd814669907cfd4030c3b77b9987"
     end
     on_intel do
-      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.4/thread_0.1.4_darwin_amd64.tar.gz"
-      sha256 "a294894d5b36b2a0463d5f758b4e89b43c35c51360ede40142843b08af394946"
+      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.6/thread_0.1.6_darwin_amd64.tar.gz"
+      sha256 "149532a0e8d9207b4bf9320ac85bf44b50aba26a0fd93040c993df58ffef7b1e"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.4/thread_0.1.4_linux_arm64.tar.gz"
-      sha256 "34ac261e8b81fd46585258dcd88c9af8c59037152b5a882ccd8205cdcaf927c7"
+      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.6/thread_0.1.6_linux_arm64.tar.gz"
+      sha256 "7dc08b53b5e98c02e02e90d0ac4187766dda832850feab0715437ba410b29a14"
     end
     on_intel do
-      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.4/thread_0.1.4_linux_amd64.tar.gz"
-      sha256 "d21fb536e3b9c4ce4a9176e5b2b609f32570c40cae79a5d986e6c844a18299aa"
+      url "https://github.com/convergent-systems-co/thread/releases/download/v0.1.6/thread_0.1.6_linux_amd64.tar.gz"
+      sha256 "3e61d0bbe20ec45418ea629a467cfcd9fe9ec3e4c3854b6cb04be8c45fa1b918"
     end
   end
 
