@@ -5,7 +5,6 @@
 class Ai < Formula
   desc "Constitution CLI for governing AI assistants"
   homepage "https://github.com/convergent-systems-co/aiConstitution"
-  version "1.10.0"
   license "Apache-2.0"
 
   on_macos do
