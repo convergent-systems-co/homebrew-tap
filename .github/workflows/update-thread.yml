@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: update-thread-formula
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -19,35 +23,67 @@ jobs:
       - uses: actions/checkout@v4
       - name: Resolve version
         id: version
-        run: |
-          VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
-          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
-      - name: Download artifacts and update checksums
         env:
-          VERSION: ${{ steps.version.outputs.version }}
+          THREAD_RAW_VERSION: ${{ github.event.client_payload.version || github.event.inputs.version }}
         run: |
-          base="https://github.com/convergent-systems-co/thread/releases/download/v${VERSION}"
-          curl -fsSL "${base}/thread_${VERSION}_darwin_amd64.tar.gz" -o darwin-amd64.tar.gz
-          curl -fsSL "${base}/thread_${VERSION}_darwin_arm64.tar.gz" -o darwin-arm64.tar.gz
-          curl -fsSL "${base}/thread_${VERSION}_linux_amd64.tar.gz" -o linux-amd64.tar.gz
-          curl -fsSL "${base}/thread_${VERSION}_linux_arm64.tar.gz" -o linux-arm64.tar.gz
+          THREAD_VERSION="${THREAD_RAW_VERSION#v}"
+          if [[ ! "$THREAD_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "Invalid release version: $THREAD_RAW_VERSION" >&2
+            exit 1
+          fi
+          echo "version=$THREAD_VERSION" >> "$GITHUB_OUTPUT"
+      - name: Download release checksums and update formula
+        env:
+          THREAD_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          base="https://github.com/convergent-systems-co/thread/releases/download/v${THREAD_VERSION}"
+          curl --fail --show-error --silent --location --retry 5 --retry-all-errors \
+            "${base}/checksums.txt" -o checksums.txt
           python3 - <<'PY'
-          import hashlib, os, pathlib, re
-          v=os.environ["VERSION"]
-          p=pathlib.Path("Formula/thread.rb")
-          s=p.read_text()
-          hashes={name:hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() for name in ["darwin-amd64.tar.gz","darwin-arm64.tar.gz","linux-amd64.tar.gz","linux-arm64.tar.gz"]}
-          s=re.sub(r'version "[^"]+"', f'version "{v}"', s, count=1)
-          for key, value in hashes.items():
-              s=s.replace({"darwin-amd64.tar.gz":"2e6ba354c0c8f88610939b4954c6847a5a836438dd63e24af00271af52b7c1a9","darwin-arm64.tar.gz":"2ca4f5589e992c69113f1f686666c1fa84f25f53aac818adc38ddba8e51ecba2","linux-amd64.tar.gz":"941444255524d57d14408d414216ca34c31e306b95125c127903cc54cb5c5d68","linux-arm64.tar.gz":"2913088679f63c6c9e949029a9bc9b40f26ba80091ac27566a70a34d64f3c3b6"}[key],value)
-          p.write_text(s)
+          import os
+          import pathlib
+          import re
+
+          version = os.environ["THREAD_VERSION"]
+          expected = {
+              "darwin_amd64": f"thread_{version}_darwin_amd64.tar.gz",
+              "darwin_arm64": f"thread_{version}_darwin_arm64.tar.gz",
+              "linux_amd64": f"thread_{version}_linux_amd64.tar.gz",
+              "linux_arm64": f"thread_{version}_linux_arm64.tar.gz",
+          }
+          published = {}
+          for line in pathlib.Path("checksums.txt").read_text().splitlines():
+              digest, name = line.split()
+              if not re.fullmatch(r"[0-9a-f]{64}", digest):
+                  raise SystemExit(f"invalid checksum for {name}")
+              published[name] = digest
+          missing = sorted(set(expected.values()) - set(published))
+          if missing:
+              raise SystemExit(f"release checksums missing expected artifacts: {missing}")
+
+          formula = pathlib.Path("Formula/thread.rb")
+          source = formula.read_text()
+          source, count = re.subn(r'^  version "[^"]+"$', f'  version "{version}"', source, count=1, flags=re.MULTILINE)
+          if count != 1:
+              raise SystemExit("expected exactly one Thread version field")
+          for platform, artifact in expected.items():
+              pattern = rf'(url "[^"]*thread_#\{{version\}}_{platform}\.tar\.gz"\n\s+sha256 ")[0-9a-f]{{64}}(")'
+              source, count = re.subn(pattern, rf'\g<1>{published[artifact]}\2', source)
+              if count != 1:
+                  raise SystemExit(f"expected exactly one checksum field for {platform}")
+          formula.write_text(source)
           PY
+          ruby -c Formula/thread.rb
       - name: Commit
         env:
-          VERSION: ${{ steps.version.outputs.version }}
+          THREAD_VERSION: ${{ steps.version.outputs.version }}
         run: |
+          if git diff --quiet -- Formula/thread.rb; then
+            echo "Thread formula is already at v${THREAD_VERSION}"
+            exit 0
+          fi
           git config user.name github-actions[bot]
           git config user.email github-actions[bot]@users.noreply.github.com
           git add Formula/thread.rb
-          git commit -m "chore: update thread to v${VERSION}" || exit 0
+          git commit -m "chore: update thread to v${THREAD_VERSION}"
           git push
