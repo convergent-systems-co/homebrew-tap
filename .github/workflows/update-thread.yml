@@ -63,14 +63,12 @@ jobs:
 
           formula = pathlib.Path("Formula/thread.rb")
           source = formula.read_text()
-          source, count = re.subn(r'^  version "[^"]+"$', f'  version "{version}"', source, count=1, flags=re.MULTILINE)
-          if count != 1:
-              raise SystemExit("expected exactly one Thread version field")
           for platform, artifact in expected.items():
-              pattern = rf'(url "[^"]*thread_#\{{version\}}_{platform}\.tar\.gz"\n\s+sha256 ")[0-9a-f]{{64}}(")'
-              source, count = re.subn(pattern, rf'\g<1>{published[artifact]}\2', source)
+              pattern = rf'(url "https://github\.com/convergent-systems-co/thread/releases/download/)v[^/]+(/thread_)[^_]+(_{platform}\.tar\.gz"\n\s+sha256 ")[0-9a-f]{{64}}(")'
+              replacement = rf'\g<1>v{version}\g<2>{version}\g<3>{published[artifact]}\4'
+              source, count = re.subn(pattern, replacement, source)
               if count != 1:
-                  raise SystemExit(f"expected exactly one checksum field for {platform}")
+                  raise SystemExit(f"expected exactly one URL/checksum pair for {platform}")
           formula.write_text(source)
           PY
           ruby -c Formula/thread.rb
