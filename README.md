@@ -29,9 +29,9 @@ have been verified. Existing legacy installations are not automatically removed.
 
 ## Automation
 
-Formula versions are updated automatically via GitHub Actions whenever a new release is published in the upstream project. The workflow:
+Thread versions are updated automatically when its upstream release workflow sends a `thread-release` repository dispatch. The tap workflow:
 
-1. Runs daily and on manual trigger
-2. Downloads the macOS binaries from the upstream release
-3. Computes SHA256 checksums
-4. Opens a pull request with the updated formula
+1. Accepts the release version from the dispatch or a manual trigger
+2. Downloads the release's published `checksums.txt`
+3. Validates all macOS and Linux artifacts and updates the matching formula fields
+4. Checks Ruby syntax and commits the formula update
